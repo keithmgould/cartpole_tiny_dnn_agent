@@ -17,6 +17,10 @@ The agent currently learns and performs much better than a random agent, but cap
 
 The code for the gym http client in this repo is (somewhat heavily) modified from [here](https://github.com/openai/gym-http-api/tree/master/binding-cpp).
 
+### Inspiration
+
+I treated the code found in PyTorch's [example for REINFORCE](https://github.com/pytorch/examples/blob/master/reinforcement_learning/reinforce.py) as a template for the agent in this repo.
+
 ### Setup:
 
 0. Ensure you have python on your machine, able to run the OpenAI http server. Directions [HERE](https://github.com/openai/gym-http-api#getting-started).
