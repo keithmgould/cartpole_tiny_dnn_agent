@@ -86,16 +86,15 @@ void preprocess_rewards(std::vector<float>& rewards)
 /*
 	Creates a one-hot vector for each action taken
 */
-std::vector<vec_t> prepare_desired_out(std::vector<label_t>& actions)
+std::vector<vec_t> prepare_desired_out(std::vector<label_t>& actions, std::vector<float>& rewards)
 {
 	std::vector<vec_t> desired_out;
-	for(typename std::vector<label_t>::const_iterator it = actions.begin(); it != actions.end(); ++it)
+	for(int i = 0; i < actions.size(); i++)
 	{
-		// std::cout << *it << ",";
-		if((int) *it == 1){
-			desired_out.push_back({1, 0});
+		if((int) actions[i] == 1){
+			desired_out.push_back({rewards[i], 0});
 		}else{
-			desired_out.push_back({0, 1});
+			desired_out.push_back({0, rewards[i]});
 		}
 	}
 	// std::cout << std::endl;
@@ -127,16 +126,10 @@ void print_vector(std::vector<T> &data, const std::string& var_name)
 		desired_out: these were the actions taken that produced the reward
 		rewards: these are the normalized rewards
 */
-void train(network<sequential>& net, std::vector<tiny_dnn::vec_t>& observations, std::vector<vec_t>& desired_outs,std::vector<float>& rewards)
+void train(network<sequential>& net, std::vector<tiny_dnn::vec_t>& observations, std::vector<vec_t>& desired_outs)
 {
 	adam optimizer;
-
-	for(int i = 0; i < observations.size(); i++)
-	{
-		std::vector<tiny_dnn::vec_t> observation(observations.begin() + i, observations.begin() + i + 1);
-		std::vector<tiny_dnn::vec_t> desired_out(desired_outs.begin() + i, desired_outs.begin() + i + 1);
-		net.fit<mse>(optimizer, observation, desired_out, 1, 1);
-	}
+	net.fit<mse>(optimizer, observations, desired_outs, 1, 1);
 }
 
 // used only for debugging
@@ -211,9 +204,9 @@ static void run_single_environment(
 		preprocess_rewards(rewards);
 
 		// create 1-hot vector (based on actions taken) to represent desired_out
-		desired_out = prepare_desired_out(actions);
+		desired_out = prepare_desired_out(actions, rewards);
 
-		train(net, observations, desired_out, rewards);
+		train(net, observations, desired_out);
 
 		// log some stuff for debugging...
 		total_rewards.push_back(total_reward);
