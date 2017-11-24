@@ -127,14 +127,16 @@ void print_vector(std::vector<T> &data, const std::string& var_name)
 		desired_out: these were the actions taken that produced the reward
 		rewards: these are the normalized rewards
 */
-void train(network<sequential>& net, std::vector<tiny_dnn::vec_t>& observations, std::vector<vec_t>& desired_out,std::vector<float>& rewards)
+void train(network<sequential>& net, std::vector<tiny_dnn::vec_t>& observations, std::vector<vec_t>& desired_outs,std::vector<float>& rewards)
 {
-
 	adam optimizer;
 
-	size_t batch_size = 1;
-	size_t epochs = 1;
-	net.fit<mse>(optimizer, observations, desired_out, batch_size, epochs);
+	for(int i = 0; i < observations.size(); i++)
+	{
+		std::vector<tiny_dnn::vec_t> observation(observations.begin() + i, observations.begin() + i + 1);
+		std::vector<tiny_dnn::vec_t> desired_out(desired_outs.begin() + i, desired_outs.begin() + i + 1);
+		net.fit<mse>(optimizer, observation, desired_out, 1, 1);
+	}
 }
 
 // used only for debugging
