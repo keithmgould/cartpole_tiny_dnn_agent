@@ -13,6 +13,10 @@ The agent currently learns and performs much better than a random agent, but cap
 0. a c++ compiler
 0. boost (needed by the gym http c++ client)
 
+### origin of the agent
+
+The code for the gym http client in this repo is (somewhat heavily) modified from [here](https://github.com/openai/gym-http-api/tree/master/binding-cpp).
+
 ### Setup:
 
 0. Ensure you have python on your machine, able to run the OpenAI http server. Directions [HERE](https://github.com/openai/gym-http-api#getting-started).
