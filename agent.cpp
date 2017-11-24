@@ -97,13 +97,6 @@ std::vector<vec_t> prepare_desired_out(std::vector<label_t>& actions, std::vecto
 			desired_out.push_back({0, rewards[i]});
 		}
 	}
-	// std::cout << std::endl;
-
-	// for(std::vector<vec_t>::const_iterator it = desired_out.begin(); it != desired_out.end(); ++it)
-	// {
-	// 	std::cout << "(" << (*it)[0] << "," << (*it)[1] <<  ")";
-	// }
-	// std::cout << std::endl;
 
 	return desired_out;
 }
