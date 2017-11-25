@@ -179,8 +179,13 @@ static void run_single_environment(
 
 		while (1) {
 			prediction = forward_prop(state, net);
+
+			// use the softmax prediction to do a weighted random selection
 			int action = action_space->weighted_sample(prediction);
-			env->step(action, true, state); // state passed in so it can be updated
+
+ 			// state passed in so it can be updated
+			env->step(action, true, state);
+
 			// TODO: add penalty for deviating on X pos
 			total_reward += state.reward;
 			total_steps += 1;
