@@ -17,7 +17,7 @@ The agent currently learns and performs much better than a random agent, but cap
 
 The code for the gym http client in this repo is (somewhat heavily) modified from [here](https://github.com/openai/gym-http-api/tree/master/binding-cpp).
 
-### Inspiration
+### Inspiration:
 
 I treated the code found in PyTorch's [example for REINFORCE](https://github.com/pytorch/examples/blob/master/reinforcement_learning/reinforce.py) as a template for the agent in this repo.
 
@@ -31,3 +31,22 @@ I treated the code found in PyTorch's [example for REINFORCE](https://github.com
 ### Running:
 
 Once you run the agent, you *should* see the gym render the simulation. This is at least the case for running on a mac.
+
+### Pseudocode:
+
+The part I'm *least* confident about is the `desired_outs` section. This corresponds to [this](https://github.com/keithmgould/cartpole_tiny_dnn_agent/blob/master/agent.cpp#L89) method.
+
+```
+  Forever do
+    state = env.reset
+    states = actsions = rewards = []
+    while in_episode?
+      possible_actions = net.predict(state) //softmax (probabilities sum to 1)
+      action = weighted_random_choice(possible_actions) (action is 0 or 1 for left or right)
+      state, reward, in_episode? = env.step(action) // reward is always 1
+      actions.push(action); state.push(state); reward.push(reward) // store things
+    rewards = normalize(rewards) // mean=0, std=1
+    desired_outs = one_hot_using_rewards(actions,rewards) // for ex: 1 => {1.3, 0}. 0 => {0, 0.7}
+    for(int i = 0; i < actions.size; i++)
+      net.train(state[i], desired_outs[i])
+```
