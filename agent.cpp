@@ -101,15 +101,6 @@ std::vector<vec_t> prepare_desired_out(std::vector<label_t>& actions, std::vecto
   return desired_out;
 }
 
-template<class T>
-void print_vector(std::vector<T> &data, const std::string& var_name)
-{
-  std::cout << var_name << "--------------------" << std::endl;
-  for(typename std::vector<T>::const_iterator it = data.begin(); it != data.end(); ++it)
-    std::cout << *it << ',';
-  std::cout << std::endl;
-}
-
 /*
   http://tiny-dnn.readthedocs.io/en/latest/how_tos/How-Tos.html#train-the-model
 
@@ -125,7 +116,17 @@ void train(network<sequential>& net, std::vector<tiny_dnn::vec_t>& observations,
   net.fit<mse>(optimizer, observations, desired_outs, 1, 1);
 }
 
-// used only for debugging
+// this function used only for debugging
+template<class T>
+void print_vector(std::vector<T> &data, const std::string& var_name)
+{
+  std::cout << var_name << "--------------------" << std::endl;
+  for(typename std::vector<T>::const_iterator it = data.begin(); it != data.end(); ++it)
+    std::cout << *it << ',';
+  std::cout << std::endl;
+}
+
+// this function used only for debugging
 float determine_average_total_rewards(std::vector<float>& total_rewards)
 {
   if(total_rewards.size() == 0) { return 0; }
