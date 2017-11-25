@@ -73,7 +73,7 @@ void set_std_dev_to_one(std::vector<float>& rewards)
     2. set mean to zero. Related to reducing variance.
     3. set std dev to one. Related to reducing variance.
 
-		Parts 2&3 are related to the 'baseline' of the REINFORCE algorithm.
+    Parts 2&3 are related to the 'baseline' of the REINFORCE algorithm.
 */
 void preprocess_rewards(std::vector<float>& rewards)
 {
