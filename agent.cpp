@@ -68,10 +68,10 @@ void set_std_dev_to_one(std::vector<float>& rewards)
 
 /*
   Preprocessing does four things:
-		0. reverse order of rewards (not sure needed since all rewards in this case are 1s)
-		1. applies a discount. Related to credit assignment problem.
-		2. set mean to zero. Related to reducing variance.
-		3. set std dev to one. Related to reducing variance.
+    0. reverse order of rewards (not sure needed since all rewards in this case are 1s)
+    1. applies a discount. Related to credit assignment problem.
+    2. set mean to zero. Related to reducing variance.
+    3. set std dev to one. Related to reducing variance.
 
 		Parts 2&3 are related to the 'baseline' of the REINFORCE algorithm.
 */
